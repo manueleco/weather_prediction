@@ -33,7 +33,7 @@ SdFile root;
 // Adafruit SD shields and modules: pin 10
 // Sparkfun SD shield: pin 8
 // MKRZero SD: SDCARD_SS_PIN
-const int chipSelect = 10;
+const int chipSelect = 4;
 
 void setup() {
   // Open serial communications and wait for port to open:
@@ -41,8 +41,7 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-
-
+  
   Serial.print("\nInitializing SD card...");
 
   // we'll use the initialization code from the utility libraries
