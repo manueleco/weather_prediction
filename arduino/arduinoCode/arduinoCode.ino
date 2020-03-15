@@ -84,6 +84,7 @@ void setup() {
 void loop() {
 
   Serial.println("************************************");
+  Serial.println("=========================================== DHT11: mediciones ================================");
   Serial.print("Temperatura de DHT11: ");
 
   Serial.print(getTemp("c"));
@@ -110,6 +111,7 @@ void loop() {
   Serial.println(" % ");
 
   Serial.println("************************************");
+  Serial.println("=========================================== BMP280: mediciones ================================");
 
   Serial.print(F("Temperatura de BMP280 = "));
   Serial.print(bmp.readTemperature());
