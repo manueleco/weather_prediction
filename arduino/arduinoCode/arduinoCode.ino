@@ -58,7 +58,7 @@ void setup() {
   Serial.println("Inicializando BMP280");
   if (!bmp.begin()) {
     Serial.println(F("NO SE HA ENCONTRADO SENSOR BMP280"));
-    while (1);
+    //while (1);
   }
 
   /* Default settings from datasheet. */
@@ -91,6 +91,7 @@ void loop() {
   Serial.print(" *C ");
   Serial.print(getTemp("f"));
   Serial.println (" *F");
+  
 
   Serial.println("************************************");
 
