@@ -10,7 +10,9 @@ Proyecto de medición de variables climáticas para predecir el clima para la cl
   * Código con markov
   * Código con probabilidades
   
-  
+
+## Arduino para las mediciones
 ### Código de arduino *(en carpeta "arduino")*
 
+## Predicciones
 ### Código de predicciones *(en carpeta "Predicciones python")*
