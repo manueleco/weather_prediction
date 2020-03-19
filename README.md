@@ -12,7 +12,7 @@ Proyecto de medición de variables climáticas para predecir el clima para la cl
   
 
 ## Arduino para las mediciones
-### Código de arduino *(en carpeta "arduino")*
+ *Código de arduino (en carpeta "arduino")*
 
 ## Predicciones
-### Código de predicciones *(en carpeta "Predicciones python")*
+ *Código de predicciones (en carpeta "Predicciones python")*
