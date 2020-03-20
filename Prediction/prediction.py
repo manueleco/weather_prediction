@@ -76,7 +76,7 @@ def getNext(freq,probabilidades):
 #Obtener las temperaturas y la humedad desde el archivo csv
 temps = []
 humids = []
-with open('temps2.csv') as csv_file:
+with open('Prediction/temps2.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     i = 0
