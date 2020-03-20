@@ -3,16 +3,16 @@ Proyecto de medición de variables climáticas para predecir el clima para la cl
 
 
 ## Distribución del Repo
-* Código de arduino
+* **/arduino** _Código de arduino_
   * Templates
   * Código utilizado en el arduino Mega 2560
-* Código de python para las predicciones
-  * Código con markov
-  * Código con probabilidades
+* **/Prediction** _Código de python para las predicciones_
+  * **/prediction.py** programa de Python para determinar las próximas temperaturas a través de distribución de frecuencias y cadenas de Markov
+* **/'Bayes for weather'** _Código de Python aplicando teorema de Bayes_ 
+  * **/weatherPredictionBayes.py** programa de Python para determinar probabilidades con el teorema de Bayes
   
 
-## Arduino para las mediciones
- *Código de arduino (en carpeta "arduino")*
+### Arduino para las mediciones
  
  Para las mediciones del arduino se utilizaron los siguientes componentes:
  * Arduino Mega 2560
@@ -21,7 +21,3 @@ Proyecto de medición de variables climáticas para predecir el clima para la cl
  
 
 
-## Probabilidades y predicciones de clima
- *Distribución del código*
- * __Bayes for weather:__ programa de Python para determinar probabilidades con el teorema de Bayes
- * __Prediction:__ programa de Python para determinar las próximas temperaturas a través de distribución de frecuencias y cadenas de Markov
