@@ -52,7 +52,7 @@ def getProb(listaF,total):
 
 #Imprimir probabilidades
 def imprimir(marcas,freq,prob,tag):
-    print(f'################### {tag} ###################')
+    print('################### {} ###################'.format(tag))
     print("Marcas de clase \t Frecuencias \t Probabilidad")
     k = 0
     limite = len(freq)
@@ -110,10 +110,12 @@ probHum = getProb(freqHum,sumFreq(freqHum))
 imprimir(markTemp,freqTemp,probTemp,' Temperatura ')
 imprimir(markHum,freqHum,probHum,' Humedad ')
 
-#Temperatura
-resultadoTemp = getNext(freqTemp,probTemp)
-print('Posible siguiente temperatura: {:0.2f} - {:0.2f}'.format(markTemp[resultadoTemp],markTemp[resultadoTemp+1]))
-
-#Humedad
-resultadoHum = getNext(freqHum,probHum)
-print('Posible siguiente humedad: {:0.2f}% - {:0.2f}%'.format(markHum[resultadoHum],markHum[resultadoHum+1]))
+#Predecir las 5 siguientes temperaturas y humedades
+k = 0
+while k<7:
+    k +=1
+    tiempo = (k*30)
+    #Temperatura
+    resultadoTemp = getNext(freqTemp,probTemp)
+    resultadoHum = getNext(freqHum,probHum)
+    print('En {} min la temperatura será de: {:0.2f} - {:0.2f} y la humedad: {:0.2f}% - {:0.2f}%'.format(tiempo,markTemp[resultadoTemp],markTemp[resultadoTemp+1],markHum[resultadoHum],markHum[resultadoHum+1]))
