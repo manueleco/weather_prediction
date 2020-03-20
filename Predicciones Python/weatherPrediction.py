@@ -239,7 +239,7 @@ print("Probabilidad de temperatura agradable y humedad baja: %5.2f " %
 print("Probabilidad de temperatura agradable y humedad agradable: %5.2f \n" %
       (probBuenaTempHumBuena))
 
-print(" ================= APLICANDO TEOREMA DE BAYES ================== ")
+print(" ================= APLICANDO TEOREMA DE BAYES ================== \n")
 
 print("Probabilidad de calor dado humedad alta: %5.2f " % (calorPorHumedadMax))
 print("Probabilidad de calor dado humedad baja: %5.2f " % (calorPorHumedadMin))
