@@ -22,6 +22,6 @@ Proyecto de medición de variables climáticas para predecir el clima para la cl
 
 
 ## Probabilidades y predicciones de clima
- *Código de predicciones (en carpeta "Predicciones python")*
+ *Distribución del código*
  * __Bayes for weather:__ programa de Python para determinar probabilidades con el teorema de Bayes
  * __Prediction:__ programa de Python para determinar las próximas temperaturas a través de distribución de frecuencias y cadenas de Markov
