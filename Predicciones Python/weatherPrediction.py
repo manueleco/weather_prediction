@@ -32,6 +32,8 @@ with open('weatherData.csv') as csvDataFile:
 
 #print(allData)
 
+# ===================================================== OCURRENCIAS DE TEMPERATURAS ==============================================
+
 #Ocurrencias de calor
 tempOcurrenciesCalor = 0
 for i in temp : 
@@ -49,6 +51,10 @@ tempOcurrenciesBueno = 0
 for i in temp : 
     if i > frioTemp and i<calorTemp: 
         tempOcurrenciesBueno = tempOcurrenciesBueno + 1
+
+
+
+# ===================================================== OCURRENCIAS DE HUMEDADES ==============================================
 
 #Ocurrencias de humedad alta
 humOcurrenciesMax = 0
@@ -69,6 +75,8 @@ for i in hum :
         humOcurrenciesBueno = humOcurrenciesBueno + 1
 
 
+# ===================================================== OCURRENCIAS DE CALOR Y HUMEDADES ==============================================
+
 #Ocurrencias de calor y humedad alta
 calorHumMax = 0
 for i in allData : 
@@ -86,6 +94,8 @@ calorHumBueno = 0
 for i in allData : 
     if i[0] > calorTemp and (i[1] < humedadMax and i[1] > humedadMin): 
         calorHumBueno = calorHumBueno + 1
+
+# ===================================================== OCURRENCIAS DE FRIO Y HUMEDADES ==============================================
 
 #Ocurrencias de frio y humedad alta
 frioHumMax = 0
@@ -106,6 +116,8 @@ for i in allData :
         frioHumBueno = frioHumBueno + 1
 
 
+# ===================================================== OCURRENCIAS DE TEMPERATURAS AGRADABLES Y HUMEDADES ==============================================
+
 #Ocurrencias de temperatura agradable y humedad alta
 buenClimaHumMax = 0
 for i in allData : 
@@ -124,20 +136,56 @@ for i in allData :
     if (i[0] > frioTemp and i[0] < calorTemp) and (i[1] < humedadMax and i[1] > humedadMin): 
         buenClimaHumBueno = buenClimaHumBueno + 1
 
+
+
+
+
 #Cantidad de mediciones de cada variable
 cantMedicionesTemp = len(temp)-1
 cantMedicionesHum = len(hum)-1
+cantMedicionesAllData = len(allData)-1
 
-#Probabilidades
+
+
+
+# ================================================== PROBABILIDADES ==================================================================
 probCalor = tempOcurrenciesCalor/cantMedicionesTemp
 probFrio = tempOcurrenciesFrio/cantMedicionesTemp
+probBuenaTemp = tempOcurrenciesBueno/cantMedicionesTemp
 
-probHumedadAgradable = humOcurrenciesBueno/cantMedicionesHum
+probHumedadMax = humOcurrenciesMax/cantMedicionesHum
+probHumedadMin = humOcurrenciesMin/cantMedicionesHum
+probHumedadBuena = humOcurrenciesBueno/cantMedicionesHum
+
+probCalorHumMax = calorHumMax/cantMedicionesAllData
+probCalorHumMin = calorHumMin/cantMedicionesAllData
+probCalorHumBuena = calorHumBueno/cantMedicionesAllData
+
+probFrioHumMax = frioHumMax/cantMedicionesAllData
+probFrioHumMin = frioHumMin/cantMedicionesAllData
+probFrioHumBuena = frioHumBueno/cantMedicionesAllData
+
+probBuenaTempHumMax = buenClimaHumMax/cantMedicionesAllData
+probBuenaTempHumMin = buenClimaHumMin/cantMedicionesAllData
+probBuenaTempHumBuena = buenClimaHumBueno/cantMedicionesAllData
+
+
+# ================================================== BAYES ==================================================================
+
+pCondicionalCalorPorHumedadMax = (probCalorHumMax)/probCalor
+calorPorHumedadMax = (pCondicionalCalorPorHumedadMax*probCalor)/probCalor
+
+pCondicionalCalorPorHumedadMin = (probCalorHumMin)/probCalor
+calorPorHumedadMin = (pCondicionalCalorPorHumedadMin*probCalor)/probCalor
+
+pCondicionalCalorPorHumedadMax = (probCalorHumBuena)/probCalor
+calorPorHumedadBuena = (pCondicionalCalorPorHumedadMax*probCalor)/probCalor
 
 
 #print(temp)
 #print(hum)
 
+print("\nCantidad de mediciones de todo: %2d " %(cantMedicionesAllData))
 print("\nCantidad de mediciones de temperatura: %2d " %(cantMedicionesTemp))
 print("Cantidad de mediciones de humedad: %2d \n" %(cantMedicionesHum))
 
@@ -162,7 +210,30 @@ print("Ocurrencias de temperatura agradable y humedad alta: %2d " %(buenClimaHum
 print("Ocurrencias de temperatura agradable y humedad baja: %2d " %(buenClimaHumMin))
 print("Ocurrencias de temperatura agradable y humedad agradable: %2d \n" %(buenClimaHumBueno))
 
-print("Probabilidad de Calor: %5.2f " %(probCalor))
-print("Probabilidad de Frio: %5.2f \n" %(probFrio))
+# ========================================================= PRINT DE PROBABILIDADES ====================================================
 
-print("Probabilidad de humedad agradable: %5.2f \n" %(probHumedadAgradable))
+print("Probabilidad de Calor: %5.2f " %(probCalor))
+print("Probabilidad de Frio: %5.2f " %(probFrio))
+print("Probabilidad de Frio: %5.2f \n" %(probBuenaTemp))
+
+print("Probabilidad de humedad alta: %5.2f " %(probHumedadMax))
+print("Probabilidad de humedad baja: %5.2f " %(probHumedadMin))
+print("Probabilidad de humedad agradable: %5.2f \n" %(probHumedadBuena))
+
+print("Probabilidad de calor y humedad alta: %5.2f " %(probCalorHumMax))
+print("Probabilidad de calor y humedad baja: %5.2f " %(probCalorHumMin))
+print("Probabilidad de calor y humedad agradable: %5.2f \n" %(probCalorHumBuena))
+
+print("Probabilidad de frio y humedad alta: %5.2f " %(probFrioHumMax))
+print("Probabilidad de frio y humedad baja: %5.2f " %(probFrioHumMin))
+print("Probabilidad de frio y humedad agradable: %5.2f \n" %(probFrioHumBuena))
+
+print("Probabilidad de temperatura agradable y humedad alta: %5.2f " %(probBuenaTempHumMax))
+print("Probabilidad de temperatura agradable y humedad baja: %5.2f " %(probBuenaTempHumMin))
+print("Probabilidad de temperatura agradable y humedad agradable: %5.2f \n" %(probBuenaTempHumBuena))
+
+print(" ================= APLICANDO TEOREMA DE BAYES ================== ")
+
+print("Probabilidad de calor dado humedad alta: %5.2f " %(calorPorHumedadMax))
+print("Probabilidad de calor dado humedad baja: %5.2f " %(calorPorHumedadMin))
+print("Probabilidad de calor dado humedad agradable: %5.2f " %(calorPorHumedadBuena))
