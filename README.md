@@ -13,6 +13,13 @@ Proyecto de medición de variables climáticas para predecir el clima para la cl
 
 ## Arduino para las mediciones
  *Código de arduino (en carpeta "arduino")*
+ 
+ Para las mediciones del arduino se utilizaron los siguientes componentes:
+ * Arduino Mega 2560
+ * Sensor DHT11
+ * Sensor BMP280
+ 
+
 
 ## Predicciones
  *Código de predicciones (en carpeta "Predicciones python")*
