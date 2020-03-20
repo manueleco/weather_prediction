@@ -1,5 +1,6 @@
 import csv
 import math
+import numpy as np
 
 rangeSize = 6
 
@@ -62,6 +63,15 @@ def imprimir(marcas,freq,prob,tag):
         k+=1
     print('\n')     
 
+#Funcion de predicción en base a probabilidades
+#Saca el indice del rango de la posible probabilidad
+def getNext(freq,probabilidades):
+    indices = []
+    for item in range(0,len(freq)):
+        indices.insert(item,item)
+    nuevo = np.random.choice(indices, 1, replace=True, p=probabilidades)# calcular la proxima temperatura el resultado depende de la distribucion de las probabilidades
+    actual=nuevo[0:1][0] #asignar temperatura input para la proxima prediccion
+    return actual
 
 #Obtener las temperaturas y la humedad desde el archivo csv
 temps = []
@@ -96,8 +106,14 @@ markHum = infoHum[0]
 freqHum = infoHum[1]
 probHum = getProb(freqHum,sumFreq(freqHum))
 
-
-
-#Imprimir probabilidades
+#Imprimir tabla de probabilidades
 imprimir(markTemp,freqTemp,probTemp,' Temperatura ')
 imprimir(markHum,freqHum,probHum,' Humedad ')
+
+#Temperatura
+resultadoTemp = getNext(freqTemp,probTemp)
+print('Posible siguiente temperatura: {:0.2f} - {:0.2f}'.format(markTemp[resultadoTemp],markTemp[resultadoTemp+1]))
+
+#Humedad
+resultadoHum = getNext(freqHum,probHum)
+print('Posible siguiente humedad: {:0.2f}% - {:0.2f}%'.format(markHum[resultadoHum],markHum[resultadoHum+1]))
