@@ -173,13 +173,15 @@ probBuenaTempHumBuena = buenClimaHumBueno/cantMedicionesAllData
 # ================================================== BAYES ==================================================================
 
 pCondicionalCalorPorHumedadMax = (probCalorHumMax)/probCalor
-calorPorHumedadMax = (pCondicionalCalorPorHumedadMax*probCalor)/probCalor
+calorPorHumedadMax = (pCondicionalCalorPorHumedadMax*probCalor)/probHumedadMax
 
 pCondicionalCalorPorHumedadMin = (probCalorHumMin)/probCalor
-calorPorHumedadMin = (pCondicionalCalorPorHumedadMin*probCalor)/probCalor
+calorPorHumedadMin = (pCondicionalCalorPorHumedadMin*probCalor)/probHumedadMax
 
 pCondicionalCalorPorHumedadMax = (probCalorHumBuena)/probCalor
-calorPorHumedadBuena = (pCondicionalCalorPorHumedadMax*probCalor)/probCalor
+calorPorHumedadBuena = (pCondicionalCalorPorHumedadMax*probCalor)/probHumedadMax
+
+humedadMaxPorCalor = (pCondicionalCalorPorHumedadMax*probHumedadMax)/probCalor
 
 
 #print(temp)
@@ -236,4 +238,6 @@ print(" ================= APLICANDO TEOREMA DE BAYES ================== ")
 
 print("Probabilidad de calor dado humedad alta: %5.2f " %(calorPorHumedadMax))
 print("Probabilidad de calor dado humedad baja: %5.2f " %(calorPorHumedadMin))
-print("Probabilidad de calor dado humedad agradable: %5.2f " %(calorPorHumedadBuena))
+print("Probabilidad de calor dado humedad agradable: %5.2f \n" %(calorPorHumedadBuena))
+
+print("Probabilidad de humedad alta dado calor: %5.2f \n" %(humedadMaxPorCalor))
