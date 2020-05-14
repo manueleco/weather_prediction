@@ -35,11 +35,13 @@ def agregarNuevoValor(x_test,nuevoValor):
     
 df.describe()
 meses = df.resample('M').mean()
-meses
 plt.plot(meses['2020'].values)
 #plt.plot(meses['2018'].values)
-plt.show()
+#plt.show()
 
+primerosDias = df['2020-05-07':'2020-05-09']
+plt.plot(primerosDias.values)
+plt.show()
 #verano2017 = df['2017-06-01':'2017-09-01']
 #plt.plot(verano2017.values)
 #plt.show()
@@ -48,7 +50,7 @@ plt.show()
 #plt.show()
 
 # RNA - OrganizaciÃ³n de datos
-PASOS=7
+PASOS=25
 
 # convert series to supervised learning
 def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
@@ -79,8 +81,8 @@ values = df.values
 # ensure all data is float
 values = values.astype('float32')
 # normalize features
-scaler = MinMaxScaler(feature_range=(-1, 1))
-values=values.reshape(-1, 1) # esto lo hacemos porque tenemos 1 sola dimension
+scaler = MinMaxScaler(feature_range=(-1, 5))
+values=values.reshape(-1, 5) # esto lo hacemos porque tenemos 1 sola dimension
 scaled = scaler.fit_transform(values)
 # frame as supervised learning
 reframed = series_to_supervised(scaled, PASOS, 1)
@@ -88,7 +90,8 @@ reframed.head()
 
 #RNA model: split into train and test sets
 values = reframed.values
-n_train_days = 315+289 - (30+PASOS)
+#n_train_days = 315+289 - (30+PASOS)
+n_train_days = 100 - (30+PASOS)
 train = values[:n_train_days, :]
 test = values[n_train_days:, :]
 # split into input and outputs
@@ -102,15 +105,16 @@ print(x_train.shape, y_train.shape, x_val.shape, y_val.shape)
 EPOCHS=10
     
 model = crear_modeloFF()
-ultimosDias = df['2020-05-13':'2020-05-14']
-ultimosDias
+
+
+ultimosDias = df['2020-05-10':'2020-05-10']
 
 values = ultimosDias.values
 values = values.astype('float32')
 # normalize features
-values=values.reshape(-1, 4) # esto lo hacemos porque tenemos 1 sola dimension
+values=values.reshape(-1, 5) # esto lo hacemos porque tenemos 1 sola dimension
 scaled = scaler.fit_transform(values)
-reframed = series_to_supervised(scaled, PASOS, 1)
+reframed = series_to_supervised(scaled, PASOS, 5)
 reframed.drop(reframed.columns[[7]], axis=1, inplace=True)
 reframed.head(7)
 
