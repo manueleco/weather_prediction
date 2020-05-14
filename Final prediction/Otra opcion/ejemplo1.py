@@ -9,14 +9,14 @@ from keras.models import Sequential
 from keras.layers import Dense,Activation,Flatten
 from sklearn.preprocessing import MinMaxScaler
 
-df = pd.read_csv('Final prediction/Otra opcion/time_series.csv',  parse_dates=[0], header=None,index_col=0, squeeze=True,names=['fecha','unidades'])
+df = pd.read_csv('weather_prediction/Final prediction/Otra opcion/weather.csv',  parse_dates=[0], header=0,index_col=0, squeeze=True)
 df.head()
 
 print(df.index.min())
 print(df.index.max())
 
-print(len(df['2017']))
-print(len(df['2018']))
+print(len(df['2020']))
+#print(len(df['2018']))
 
 def crear_modeloFF():
     model = Sequential() 
@@ -36,16 +36,16 @@ def agregarNuevoValor(x_test,nuevoValor):
 df.describe()
 meses = df.resample('M').mean()
 meses
-plt.plot(meses['2017'].values)
-plt.plot(meses['2018'].values)
+plt.plot(meses['2020'].values)
+#plt.plot(meses['2018'].values)
 plt.show()
 
-verano2017 = df['2017-06-01':'2017-09-01']
-plt.plot(verano2017.values)
-plt.show()
-verano2018 = df['2018-06-01':'2018-09-01']
-plt.plot(verano2018.values)
-plt.show()
+#verano2017 = df['2017-06-01':'2017-09-01']
+#plt.plot(verano2017.values)
+#plt.show()
+#verano2018 = df['2018-06-01':'2018-09-01']
+#plt.plot(verano2018.values)
+#plt.show()
 
 # RNA - OrganizaciÃ³n de datos
 PASOS=7
@@ -102,13 +102,13 @@ print(x_train.shape, y_train.shape, x_val.shape, y_val.shape)
 EPOCHS=10
     
 model = crear_modeloFF()
-ultimosDias = df['2018-11-16':'2018-11-30']
+ultimosDias = df['2020-05-13':'2020-05-14']
 ultimosDias
 
 values = ultimosDias.values
 values = values.astype('float32')
 # normalize features
-values=values.reshape(-1, 1) # esto lo hacemos porque tenemos 1 sola dimension
+values=values.reshape(-1, 4) # esto lo hacemos porque tenemos 1 sola dimension
 scaled = scaler.fit_transform(values)
 reframed = series_to_supervised(scaled, PASOS, 1)
 reframed.drop(reframed.columns[[7]], axis=1, inplace=True)
