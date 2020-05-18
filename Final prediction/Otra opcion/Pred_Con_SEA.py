@@ -9,7 +9,7 @@ import tensorflow_docs.plots
 import tensorflow_docs.modeling
 
 from tensorflow import keras
-from keras import layers
+from tensorflow.keras import layers
 
 #Obtener el dataset
 dataset_path='weather_prediction/Final prediction/Otra opcion/weather.csv'
@@ -42,16 +42,20 @@ normed_train_data = norm(train_dataset)
 normed_test_data = norm(test_dataset)
 
 #Modelo
-def crear_modelo():
-      model = keras.Sequential([
-    layers.Dense(64, activation='relu', input_shape=[len(train_dataset.keys())]),
-    layers.Dense(64, activation='relu'),
-    layers.Dense(1)
-  ])
+def comp_modelo():
+    model = keras.Sequential([
+        layers.Dense(64, activation='relu', input_shape=[len(train_dataset.keys())]),
+        layers.Dense(64, activation='relu'),
+        layers.Dense(1)
+    ])
 
-  optimizer = tf.keras.optimizers.RMSprop(0.001)
+    optimizer = tf.keras.optimizers.RMSprop(0.001)
 
-  model.compile(loss='mse',
-                optimizer=optimizer,
-                metrics=['mae', 'mse'])
-  return model
+    model.compile(loss='mse',
+                    optimizer=optimizer,
+                    metrics=['mae', 'mse'])
+    return model
+
+model = comp_modelo()
+model.summary()
+
