@@ -22,5 +22,11 @@ Proyecto de medición de variables climáticas para predecir el clima para la cl
  * Sensor DHT11
  * Sensor BMP280
  
+ 
+### Preparación de los datos
+En caso que exista un error en **/Otra Opcion/PredFinal.py** hay que verificar lo siguiente:
+* Que los datos numéricos tengan 2 números decimales (para ser tomados como float)
+* Verificar el formato de las fechas en el .csv dentro de la carpeta
+* **Observación:** Sobre los datos iniciales obtenidos con los sensores, se realizó un promedio entre las dos medidas de temperatura obtenidas, para solo tener una columna con los datos de la temperatura. 
 
 
