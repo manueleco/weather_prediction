@@ -96,3 +96,26 @@ plt.show()
 # plt.ylabel('MAE [temp]')
 # plt.show()
 
+loss, mae, mse = model.evaluate(normed_test_data, test_labels, verbose=2)
+
+print("Comprobando MAE: {:5.2f} temp".format(mae))
+
+
+#Predicción
+test_predictions = model.predict(normed_test_data).flatten()
+
+a = plt.axes(aspect='equal')
+plt.scatter(test_labels, test_predictions)
+plt.xlabel('True Values [test]')
+plt.ylabel('Predictions [test]')
+lims = [0, 50]
+plt.xlim(lims)
+plt.ylim(lims)
+_ = plt.plot(lims, lims)
+plt.show()
+
+error = test_predictions - test_labels
+plt.hist(error, bins = 25)
+plt.xlabel("Prediction Error [MPG]")
+_ = plt.ylabel("Count")
+plt.show()
