@@ -7,21 +7,21 @@ import tensorflow as tf
 import tensorflow_docs as tfdocs
 import tensorflow_docs.plots
 import tensorflow_docs.modeling
+from sklearn.preprocessing import MinMaxScaler
 
 from tensorflow import keras
 from tensorflow.keras import layers
 
 #Obtener el dataset
 dataset_path='weather_prediction/Final prediction/Otra opcion/weather.csv'
-#column_names = ["timestamp","temp","hum","presion","altitud"]
 raw_dataset = pd.read_csv(dataset_path, header=0,na_values = "?", comment='\t',sep=",", skipinitialspace=False,parse_dates=[0],index_col=0)
-#dataset = pd.read_csv('weather_prediction/Final prediction/Otra opcion/weather.csv',  parse_dates=[0], header=0,index_col=0, squeeze=True)
 dataset = raw_dataset.copy()
 
 #Separar los datos de entrenamiento con los datos de prueba
 train_dataset = dataset.sample(frac=0.8,random_state=0)
 test_dataset = dataset.drop(train_dataset.index)
 
+#Relación de variables
 sns.pairplot(train_dataset[["temp","hum","presion","altitud"]], diag_kind="kde")
 plt.show()
 
@@ -55,12 +55,11 @@ def comp_modelo():
                     optimizer=optimizer,
                     metrics=['mae', 'mse'])
     return model
-
 model = comp_modelo()
 model.summary()
 
 #Entrenar al modelo
-EPOCHS = 1000
+EPOCHS = 500
 
 #Evitar overfitting
 # early_stop = keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
@@ -78,14 +77,15 @@ history = model.fit(
 #Plot del entreno
 hist = pd.DataFrame(history.history)
 hist['epoch'] = history.epoch
-#print(hist.tail())
 
+plt.title("Comportamiento del entreno MAE")
 plotter = tfdocs.plots.HistoryPlotter(smoothing_std=2)
 plotter.plot({'Basic': history}, metric = "mae")
 plt.ylim([0, 10])
 plt.ylabel('MAE [temp]')
 plt.show()
 
+plt.title("Comportamiento del entreno MSE")
 plotter.plot({'Basic': history}, metric = "mse")
 plt.ylim([0, 20])
 plt.ylabel('MSE [temp^2]')
@@ -97,25 +97,43 @@ plt.show()
 # plt.show()
 
 loss, mae, mse = model.evaluate(normed_test_data, test_labels, verbose=2)
-
 print("Comprobando MAE: {:5.2f} temp".format(mae))
 
 
 #Predicción
 test_predictions = model.predict(normed_test_data).flatten()
 
+#obtener la predicción del siguiente día
+results=[]
+for i in range(15):
+    parcial = model.predict(normed_test_data).flatten()
+    results.append(parcial[i])
+
+printRes = [x for x in results]    
+
+
+predic_v1 = pd.DataFrame(printRes)
+predic_v1.plot()
+plt.title("Predicción")
+plt.xlabel('Horas')
+plt.ylabel('Grados C')
+plt.show()
+predic_v1.to_csv('weather_prediction/Final prediction/Otra opcion/pronostico.csv')
+
+plt.title("Precisión de la predicción")
 a = plt.axes(aspect='equal')
 plt.scatter(test_labels, test_predictions)
-plt.xlabel('True Values [test]')
-plt.ylabel('Predictions [test]')
+plt.xlabel('Valores Reales [test]')
+plt.ylabel('Predicciones [test]')
 lims = [0, 50]
 plt.xlim(lims)
 plt.ylim(lims)
 _ = plt.plot(lims, lims)
 plt.show()
 
+plt.title("Histograma del error de predicción")
 error = test_predictions - test_labels
 plt.hist(error, bins = 25)
-plt.xlabel("Prediction Error [MPG]")
-_ = plt.ylabel("Count")
+plt.xlabel("Error de predicción [temp]")
+_ = plt.ylabel("Cuenta")
 plt.show()
