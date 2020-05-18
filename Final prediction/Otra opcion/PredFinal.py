@@ -105,7 +105,7 @@ test_predictions = model.predict(normed_test_data).flatten()
 
 #obtener la predicción del siguiente día
 results=[]
-for i in range(15):
+for i in range(96):
     parcial = model.predict(normed_test_data).flatten()
     results.append(parcial[i])
 
