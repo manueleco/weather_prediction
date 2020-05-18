@@ -23,7 +23,7 @@ train_dataset = dataset.sample(frac=0.8,random_state=0)
 test_dataset = dataset.drop(train_dataset.index)
 
 sns.pairplot(train_dataset[["temp","hum","presion","altitud"]], diag_kind="kde")
-#plt.show()
+plt.show()
 
 #Estadísticas generales de la data
 train_stats = train_dataset.describe()
@@ -59,3 +59,26 @@ def comp_modelo():
 model = comp_modelo()
 model.summary()
 
+#Entrenar al modelo
+EPOCHS = 1000
+
+history = model.fit(
+  normed_train_data, train_labels,
+  epochs=EPOCHS, validation_split = 0.2, verbose=0,
+  callbacks=[tfdocs.modeling.EpochDots()])
+
+#Plot del entreno
+hist = pd.DataFrame(history.history)
+hist['epoch'] = history.epoch
+#print(hist.tail())
+
+plotter = tfdocs.plots.HistoryPlotter(smoothing_std=2)
+plotter.plot({'Basic': history}, metric = "mae")
+plt.ylim([0, 10])
+plt.ylabel('MAE [temp]')
+plt.show()
+
+plotter.plot({'Basic': history}, metric = "mse")
+plt.ylim([0, 20])
+plt.ylabel('MSE [temp^2]')
+plt.show()
