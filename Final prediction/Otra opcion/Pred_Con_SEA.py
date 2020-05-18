@@ -62,6 +62,14 @@ model.summary()
 #Entrenar al modelo
 EPOCHS = 1000
 
+#Evitar overfitting
+# early_stop = keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
+
+# early_history = model.fit(normed_train_data, train_labels, 
+#                     epochs=EPOCHS, validation_split = 0.2, verbose=0, 
+#                     callbacks=[early_stop, tfdocs.modeling.EpochDots()])   
+
+
 history = model.fit(
   normed_train_data, train_labels,
   epochs=EPOCHS, validation_split = 0.2, verbose=0,
@@ -82,3 +90,9 @@ plotter.plot({'Basic': history}, metric = "mse")
 plt.ylim([0, 20])
 plt.ylabel('MSE [temp^2]')
 plt.show()
+
+# plotter.plot({'Early Stopping': early_history}, metric = "mae")
+# plt.ylim([0, 10])
+# plt.ylabel('MAE [temp]')
+# plt.show()
+
