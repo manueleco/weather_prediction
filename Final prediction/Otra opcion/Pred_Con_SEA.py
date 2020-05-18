@@ -23,5 +23,35 @@ train_dataset = dataset.sample(frac=0.8,random_state=0)
 test_dataset = dataset.drop(train_dataset.index)
 
 sns.pairplot(train_dataset[["temp","hum","presion","altitud"]], diag_kind="kde")
-plt.show()
+#plt.show()
 
+#Estadísticas generales de la data
+train_stats = train_dataset.describe()
+train_stats.pop("temp")
+train_stats = train_stats.transpose()
+print(train_stats)
+
+#Separar los labels de la data que queremos predecir
+train_labels = train_dataset.pop('temp')
+test_labels = test_dataset.pop('temp')
+
+#Normalización
+def norm(x):
+      return (x - train_stats['mean']) / train_stats['std']
+normed_train_data = norm(train_dataset)
+normed_test_data = norm(test_dataset)
+
+#Modelo
+def crear_modelo():
+      model = keras.Sequential([
+    layers.Dense(64, activation='relu', input_shape=[len(train_dataset.keys())]),
+    layers.Dense(64, activation='relu'),
+    layers.Dense(1)
+  ])
+
+  optimizer = tf.keras.optimizers.RMSprop(0.001)
+
+  model.compile(loss='mse',
+                optimizer=optimizer,
+                metrics=['mae', 'mse'])
+  return model
